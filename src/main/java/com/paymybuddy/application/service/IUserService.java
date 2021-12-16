@@ -20,4 +20,6 @@ public interface IUserService {
     //SECURITY
     public void userLogin(String email, String password);
     public void getPasswordFromUser(String email);
+
+    public String passwordCreator(String password);
 }

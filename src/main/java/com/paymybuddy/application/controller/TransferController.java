@@ -26,7 +26,6 @@ public class TransferController {
     private ITransferService iTransferService;
 
     @PostMapping(value="/transfer")
-    @RolesAllowed("USER")
     public void addNewTransfer(@RequestParam String email,
                                @RequestParam String emailCorrespondence,
                                @RequestParam double amount,
@@ -35,21 +34,18 @@ public class TransferController {
     }
 
     @GetMapping(value = "/transfer")
-    @RolesAllowed("USER")
     public String getAllTransferMadeByUser(@RequestParam String email) throws JsonProcessingException {
         List<String> data = iTransferService.getAllTransferFromACorrespondence(email);
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
     }
 
     @PutMapping(value="/sendingMoneyToBank/transfer")
-    @RolesAllowed("USER")
     public void sendingMoneyToBank(@RequestParam String email,
                                    @RequestParam double amount) {
         iTransferService.sendMoneyToBankAccount(email, amount);
     }
 
     @PutMapping(value="/gettingMoneyFromBank/transfer")
-    @RolesAllowed("USER")
     public void gettingMoneyFromBank(@RequestParam String email,
                                    @RequestParam double amount) {
         iTransferService.getMoneyFromBankAccount(email, amount);

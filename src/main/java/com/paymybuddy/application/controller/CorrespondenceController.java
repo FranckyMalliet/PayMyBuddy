@@ -23,13 +23,11 @@ public class CorrespondenceController {
     private IUserService iUserService;
 
     @PostMapping(value="/correspondence")
-    @RolesAllowed("USER")
     public void addNewCorrespondence(@RequestParam String email, @RequestParam String emailCorrespondence){
         iCorrespondenceService.createNewCorrespondence(email, emailCorrespondence);
     }
 
     @GetMapping(value = "/correspondence")
-    @RolesAllowed("USER")
     public String getAllCorrespondenceOfAUser(@RequestParam String email) throws JsonProcessingException {
         List<Correspondence> data = iCorrespondenceService.getAllCorrespondenceFromUser(email);
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);

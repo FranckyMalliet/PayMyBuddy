@@ -60,7 +60,12 @@ public class UserService implements IUserService{
         return encodedPassword;
     }
 
-
+    public String passwordCreator(String password){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String rawPassword = password;
+        String encodedPassword = encoder.encode(rawPassword);
+        return encodedPassword;
+    }
 
 
 
