@@ -27,8 +27,8 @@ public class TransferController {
 
     @PostMapping(value="/transfer")
     public void addNewTransfer(@RequestParam String email,
-                               @RequestParam String emailCorrespondence,
-                               @RequestParam double amount,
+                               @RequestParam("emailCorrespondence") String emailCorrespondence,
+                               @RequestParam("amount") double amount,
                                @RequestParam String description) {
         iTransferService.sendMoneyAndUpdateUsersAccounts(email, emailCorrespondence, description, amount);
     }

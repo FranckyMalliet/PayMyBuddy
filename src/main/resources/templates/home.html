@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="Pay_My_Buddy_Stylesheet.css"/>
+    <title>Pay My Buddy Application</title>
+  </head>
+
+  <body>
+    <div id ="bloc_page">
+      <header><span class="typo_header">Pay My Buddy</span></header>
+
+      <div>
+        <a href="/home">Home</a>
+        <a href="/transfer">Transfer</a>
+        <a href="/profile">Profile</a>
+        <a href="/contact">Contact</a>
+        <a href="/logOff">Log off</a>
+      </div>
+
+      <section>
+          <h1>Send Money</h1>
+
+          <p>
+            <a href="/connection">Add Connection</a>
+          </p>
+
+        <form name="newTransferForm" th:action="@{/transfer}" method="post">
+          <p>
+            <select name="emailCorrespondence" id="emailCorrespondence"></select>
+          </p>
+          <p>
+            <input type="number" ID="amount" name="amount" placeholder="0€"/>
+          </p>
+          <p>
+            <input type="submit" ID="pay" name="pay" placeholder="Pay"/>
+          </p>
+        </form>
+      </section>
+
+      <section>
+        <h1>My Transactions</h1>
+        <p>
+          <select name="userTransfer" th:action="@{/userList}" ID="userTransfer"></select>
+        </p>
+      </section>
+    </div>
+  </body>
+</html>

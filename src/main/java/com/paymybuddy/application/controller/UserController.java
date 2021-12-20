@@ -17,13 +17,13 @@ public class UserController {
     @Autowired
     private IUserService iUserService;
 
-    @RequestMapping("/*")
-    @RolesAllowed("USER")
+    @RequestMapping("/userTest")
+    @RolesAllowed({"USER", "ADMIN"})
     public String user(){
         return "Ca marche Utilisateur !";
     }
 
-    @RequestMapping("/admin")
+    @RequestMapping("/adminTest")
     @RolesAllowed("ADMIN")
     public String admin(){
         return "Ca marche Admin !";
@@ -46,10 +46,10 @@ public class UserController {
     }
 
 
-    @GetMapping(value="/login")
+    /*@GetMapping(value="/login")
     public void Login (@RequestParam String email, @RequestParam String password){
         iUserService.userLogin(email, password);
-    }
+    }*/
 
 
 

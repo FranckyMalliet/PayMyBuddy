@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -40,11 +41,41 @@ public class JdbcSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .defaultSuccessUrl("/home",true);
+                /*.loginPage("/login")
+                .defaultSuccessUrl("/main", true)
+                .permitAll();*/
+
+
+        /*httpSecurity.authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin();
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/main", true)
+                .permitAll();*/
+
+        /*httpSecurity.authorizeRequests()
+                .antMatchers("/**")
+                .hasAnyRole("USER", "ADMIN")
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/main", true)
+                .permitAll();*/
+
+
+    /*.failureUrl("/login-error")
+                .and()
+                .logout().permitAll()
+                .and()
+                .rememberMe();*/
     }
 
     @Bean
