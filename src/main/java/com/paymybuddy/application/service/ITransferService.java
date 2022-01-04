@@ -1,5 +1,7 @@
 package com.paymybuddy.application.service;
 
+import com.paymybuddy.application.model.Transfer;
+
 import java.util.List;
 
 public interface ITransferService {
@@ -14,4 +16,7 @@ public interface ITransferService {
 
     //VIEW
     public List<String> getAllTransferFromACorrespondence(String email);
+    public List<Transfer> getAllTransferOfAUser();
+
+    public List<Transfer> getAllTransfer();
 }

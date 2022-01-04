@@ -45,15 +45,10 @@ public class UserService implements IUserService{
         userRepository.updateUserAccount(amount, email);
     }
 
-    //DELETE
-    public void deleteUser(String email) {
-        userRepository.deleteUser(email);
-    }
-
 
 
     //Password Encoder
-    private String passwordEncoder(String password){
+    public String passwordEncoder(String password){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = password;
         String encodedPassword = encoder.encode(rawPassword);
@@ -65,31 +60,5 @@ public class UserService implements IUserService{
         String rawPassword = password;
         String encodedPassword = encoder.encode(rawPassword);
         return encodedPassword;
-    }
-
-
-
-    //LOGIN
-    public void userLogin(String email, String password){
-        checkUserEmail(email);
-        checkUserPassword(email, password);
-    }
-
-    public void checkUserEmail(String email){
-        String searchEmail = userRepository.findUserEmailFromUser(email);
-        if (searchEmail == null){
-            System.out.println(email + " doesn't exist");
-        } else {
-            System.out.println("You are currently logged with the email : " + email);
-        }
-    }
-
-    public void checkUserPassword(String email, String password){
-        String searchPassword = userRepository.findUserPassword(email);
-        if(!searchPassword.equals(password)){
-            System.out.println("Incorrect password, try again !");
-        } else {
-            System.out.println("Welcome !");
-        }
     }
 }

@@ -1,17 +1,15 @@
 package com.paymybuddy.application.configuration;
 
-import com.paymybuddy.application.model.User;
 import com.paymybuddy.application.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,9 +21,6 @@ public class JdbcSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
-
-    @Autowired
-    private IUserService iUserService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -41,41 +36,16 @@ public class JdbcSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
+                .antMatchers("/css/**", "/js/**", "/images/**", "/static/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/home",true);
-                /*.loginPage("/login")
-                .defaultSuccessUrl("/main", true)
-                .permitAll();*/
-
-
-        /*httpSecurity.authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasRole("USER")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/main", true)
-                .permitAll();*/
-
-        /*httpSecurity.authorizeRequests()
-                .antMatchers("/**")
-                .hasAnyRole("USER", "ADMIN")
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/main", true)
-                .permitAll();*/
-
-
-    /*.failureUrl("/login-error")
-                .and()
-                .logout().permitAll()
-                .and()
-                .rememberMe();*/
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/home", true)
+                .permitAll();
     }
 
     @Bean

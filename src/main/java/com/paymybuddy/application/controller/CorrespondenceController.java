@@ -4,32 +4,26 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paymybuddy.application.model.Correspondence;
 import com.paymybuddy.application.service.ICorrespondenceService;
-import com.paymybuddy.application.service.IUserService;
+import com.paymybuddy.application.service.ISecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
 public class CorrespondenceController {
 
-    ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private ICorrespondenceService iCorrespondenceService;
 
     @Autowired
-    private IUserService iUserService;
+    private ISecurityService iSecurityService;
 
     @PostMapping(value="/correspondence")
-    public void addNewCorrespondence(@RequestParam String email, @RequestParam String emailCorrespondence){
+    public void addNewCorrespondence(@RequestParam String emailCorrespondence){
+        String email = iSecurityService.getUserEmail();
         iCorrespondenceService.createNewCorrespondence(email, emailCorrespondence);
-    }
-
-    @GetMapping(value = "/correspondence")
-    public String getAllCorrespondenceOfAUser(@RequestParam String email) throws JsonProcessingException {
-        List<Correspondence> data = iCorrespondenceService.getAllCorrespondenceFromUser(email);
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
     }
 }

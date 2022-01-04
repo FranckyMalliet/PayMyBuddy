@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/css/PayMyBuddyStylesheet.css">
+    <title>PayMyBuddy Application</title>
+</head>
+
+<body>
+<header><span class="typo_header">Pay My Buddy</span></header>
+
+<div id="menu_bloc">
+    <div id="application_title_menu">
+        <p>Pay My Buddy</p>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/transfer">Transfer</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/logOff">Log off</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div id="menu_second">
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li>/</li><li>
+    </li><li><a href="/transfer">Transfer</a></li>
+    </ul>
+</div>
+
+<section id="add_connection_section">
+    <div id="connection_title"><p>Add connection</p></div>
+
+    <form name="newConnectionForm" method="post" th:action="@{/correspondence}">
+        <input type="email" ID="emailCorrespondence" name="emailCorrespondence"  th:value="${emailCorrespondence}" placeholder="email"/>
+        <input type="submit" name="submit" placeholder="Add new connection"/>
+    </form>
+</section>
+</body>
+</html>
+

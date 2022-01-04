@@ -18,15 +18,4 @@ public interface CorrespondenceRepository extends JpaRepository<Correspondence, 
 
     @Query(value="FROM Correspondence c WHERE c.user.email = :email and c.emailCorrespondence = :emailCorrespondence")
     Correspondence findUserCorrespondence(@Param("email") String email, @Param("emailCorrespondence") String emailCorrespondence);
-
-    /* need knowledge @Query(value="FROM user where user.email = :email")
-    Correspondence findCorrespondenceByEmail(@Param("email") String email);*/
-
-    /*@EntityGraph(value="User.correspondenceList", attributePaths = {"correspondenceList"}, type = EntityGraph.EntityGraphType.FETCH)
-    public User findCorrespondenceByUserEmail(String email);
-
-    @Query(value="FROM Correspondence c WHERE c.user.email= :email")
-    Correspondence findCorrespondenceUser(@Param("email") String email);*/
-
-
 }

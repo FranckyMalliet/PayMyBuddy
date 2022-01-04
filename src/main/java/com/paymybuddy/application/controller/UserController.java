@@ -12,7 +12,7 @@ import javax.annotation.security.RolesAllowed;
 @RestController
 public class UserController {
 
-    ObjectMapper mapper = new ObjectMapper();
+    /*private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private IUserService iUserService;
@@ -35,25 +35,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public String getUserData(@RequestParam String email) throws JsonProcessingException {
-        User userData = iUserService.getUserDataFromEmail(email);
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userData);
-    }
-
-    @DeleteMapping(value = "/user")
-    public void deleteUser(@RequestParam String email){
-        iUserService.deleteUser(email);
-    }
-
-
-    /*@GetMapping(value="/login")
-    public void Login (@RequestParam String email, @RequestParam String password){
-        iUserService.userLogin(email, password);
+    public User getUserData(@RequestParam String email) throws JsonProcessingException {
+        return iUserService.getUserDataFromEmail(email);
     }*/
-
-
-
-
-
-
 }

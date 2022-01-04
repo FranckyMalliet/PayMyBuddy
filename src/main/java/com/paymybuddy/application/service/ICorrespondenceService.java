@@ -15,5 +15,5 @@ public interface ICorrespondenceService {
     public Correspondence getCorrespondenceFromUser(String email, String emailCorrespondence);
 
     //VIEW
-    public List<Correspondence> getAllCorrespondenceFromUser(String email);
+    public List<Correspondence> getAllCorrespondenceFromUser();
 }

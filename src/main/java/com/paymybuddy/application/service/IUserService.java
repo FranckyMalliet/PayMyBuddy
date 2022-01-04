@@ -10,16 +10,12 @@ public interface IUserService {
 
     //READ
     public User getUserDataFromEmail(String email);
+    public void getPasswordFromUser(String email);
 
     //UPDATE
     public void updateUser(double amount, String email);
 
-    //DELETE
-    public void deleteUser(String email);
-
     //SECURITY
-    public void userLogin(String email, String password);
-    public void getPasswordFromUser(String email);
-
+    public String passwordEncoder(String password);
     public String passwordCreator(String password);
 }

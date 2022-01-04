@@ -72,11 +72,4 @@ public class UserITTest {
                         .param("email", email))
                 .andExpect(status().isOk());
     }
-
-    @Test
-    public void givenAnEmail_DeleteAUserInTheDatabase() throws Exception{
-        mockMvc.perform(delete("/user")
-                        .param("email", email))
-                .andExpect(status().isOk());
-    }
 }

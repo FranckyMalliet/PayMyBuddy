@@ -7,6 +7,7 @@ import com.paymybuddy.application.repository.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,51 @@ public class TransferService implements ITransferService {
     @Autowired
     private ICorrespondenceService iCorrespondenceService;
 
+    @Autowired
+    private ISecurityService iSecurityService;
+
     public Transfer addNewTransfer(Transfer transfer){
         return transferRepository.save(transfer);
+    }
+
+    public List<Transfer> getAllTransferOfAUser(){
+        List<Correspondence> correspondenceList = iCorrespondenceService.getAllCorrespondenceFromUser();
+        List<Transfer> transferData = new ArrayList<>();
+        List<List<Transfer>> transferAllData = new ArrayList<>();
+
+        for(Correspondence correspondenceData : correspondenceList){
+             transferData = transferRepository.findAllTransferFromCorrespondence(correspondenceData.getIdCorrespondence());
+             transferAllData.add(transferData);
+        }
+
+        List<Transfer> transferList = new ArrayList<>();
+
+        for(List<Transfer> transfers : transferAllData){
+            for(Transfer transfer : transfers){
+                transferList.add(transfer);
+            }
+        }
+
+        return transferList;
+    }
+
+    public List<Transfer> getAllTransfer(){
+        return transferRepository.findAll();
+    }
+
+    public List<String> getAllTransferFromACorrespondence(String email){
+
+        List<String> transferAllData = new ArrayList<>();
+
+        List<Correspondence> correspondenceList = iCorrespondenceService.getAllCorrespondenceFromUser();
+        for (Correspondence correspondenceData : correspondenceList)
+        {
+            List<Transfer> transferList = transferRepository.findAllTransferFromCorrespondence(correspondenceData.getIdCorrespondence());
+            for (Transfer transferData : transferList) {
+                transferAllData.add(transferData.getIdTransfer() + " " + transferData.getAmount() + " " + transferData.getDescription());
+            }
+        }
+        return transferAllData;
     }
 
     public void sendMoneyAndUpdateUsersAccounts(String email, String emailCorrespondence,  String description, double amount){
@@ -37,13 +81,13 @@ public class TransferService implements ITransferService {
             Transfer transfer = new Transfer();
             transfer.setDescription(description);
             transfer.setAmount(amount);
-            transfer.setTransactionFee(collectFee(amount) - amount);
+            transfer.setTransactionFee(collectFee(amount));
             transfer.setCorrespondence(iCorrespondenceService.getCorrespondenceFromUser(email, emailCorrespondence));
 
             correspondenceUserSendingMoney.addTransfer(transfer);
             addNewTransfer(transfer);
 
-            iUserService.updateUser(userSendingMoney.getAccount() - collectFee(amount), email);
+            iUserService.updateUser(userSendingMoney.getAccount() - (amount + collectFee(amount)), email);
             iUserService.updateUser(userGettingMoney.getAccount() + amount, emailCorrespondence);
         } else {
             System.out.println("You doesn't have enough money to proceed to the payment");
@@ -66,24 +110,9 @@ public class TransferService implements ITransferService {
         User user = iUserService.getUserDataFromEmail(email);
         iUserService.updateUser(user.getAccount() + amount, email);
     }
-
-    public List<String> getAllTransferFromACorrespondence(String email){
-
-        List<String> transferAllData = new ArrayList<>();
-
-        List<Correspondence> correspondenceList = iCorrespondenceService.getAllCorrespondenceFromUser(email);
-        for (Correspondence correspondenceData : correspondenceList)
-        {
-            List<Transfer> transferList = transferRepository.findAllTransferFromCorrespondence(correspondenceData.getIdCorrespondence());
-            for (Transfer transferData : transferList) {
-                transferAllData.add(transferData.getIdTransfer() + " " + transferData.getAmount() + " " + transferData.getDescription());
-            }
-        }
-        return transferAllData;
-    }
-
-    private double collectFee(double account){
+    
+    public double collectFee(double account){
         double fee = (account*0.5)/100;
-        return account + fee;
+        return fee;
     }
 }

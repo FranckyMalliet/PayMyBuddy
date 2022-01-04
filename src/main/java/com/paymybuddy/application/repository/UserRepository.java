@@ -16,24 +16,8 @@ public interface UserRepository extends JpaRepository<User, String>, CrudReposit
     //READ
     User findUserByEmail(@Param("email") String email);
 
-    //DELETE
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM User WHERE email = :email")
-    void deleteUser(@Param("email") String email);
-
-
-
-
-
-    @Query(value="SELECT Email FROM user WHERE Email = :email", nativeQuery = true)
-    String findUserEmailFromUser(@Param("email") String email);
-
     @Query(value="SELECT password FROM user WHERE Email = :email", nativeQuery = true)
     String findUserPassword(@Param("email") String email);
-
-    @Query(value ="SELECT account FROM user WHERE Email = :email", nativeQuery = true)
-    double findAccountFromUser(@Param("email") String email);
 
     //UPDATE
     @Transactional

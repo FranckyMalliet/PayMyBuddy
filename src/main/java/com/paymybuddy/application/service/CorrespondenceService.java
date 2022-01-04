@@ -18,6 +18,9 @@ public class CorrespondenceService implements ICorrespondenceService{
     @Autowired
     private IUserService iUserService;
 
+    @Autowired
+    private ISecurityService iSecurityService;
+
     //CRUD ENDPOINTS
 
     //ADD
@@ -52,7 +55,8 @@ public class CorrespondenceService implements ICorrespondenceService{
         return correspondenceRepository.findUserCorrespondence(email, emailCorrespondence);
     }
 
-    public List<Correspondence> getAllCorrespondenceFromUser(String email){
+    public List<Correspondence> getAllCorrespondenceFromUser(){
+        String email = iSecurityService.getUserEmail();
         List<Correspondence> correspondenceList = correspondenceRepository.findAllCorrespondenceUser(email);
         return correspondenceList;
     }
