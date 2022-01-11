@@ -51,25 +51,6 @@ public class TransferService implements ITransferService {
         return transferList;
     }
 
-    public List<Transfer> getAllTransfer(){
-        return transferRepository.findAll();
-    }
-
-    public List<String> getAllTransferFromACorrespondence(String email){
-
-        List<String> transferAllData = new ArrayList<>();
-
-        List<Correspondence> correspondenceList = iCorrespondenceService.getAllCorrespondenceFromUser();
-        for (Correspondence correspondenceData : correspondenceList)
-        {
-            List<Transfer> transferList = transferRepository.findAllTransferFromCorrespondence(correspondenceData.getIdCorrespondence());
-            for (Transfer transferData : transferList) {
-                transferAllData.add(transferData.getIdTransfer() + " " + transferData.getAmount() + " " + transferData.getDescription());
-            }
-        }
-        return transferAllData;
-    }
-
     public void sendMoneyAndUpdateUsersAccounts(String email, String emailCorrespondence,  String description, double amount){
 
         User userSendingMoney = iUserService.getUserDataFromEmail(email);
@@ -95,9 +76,11 @@ public class TransferService implements ITransferService {
 
     }
 
-    public void sendMoneyToBankAccount(String email, double amount){
+    public void sendMoneyToBankAccount(double amount){
 
+        String email = iSecurityService.getUserEmail();
         User user = iUserService.getUserDataFromEmail(email);
+
         if(user.getAccount() >= amount){
             iUserService.updateUser(user.getAccount() - amount, email);
         } else {
@@ -105,8 +88,9 @@ public class TransferService implements ITransferService {
         }
     }
 
-    public void getMoneyFromBankAccount(String email, double amount){
+    public void getMoneyFromBankAccount(double amount){
 
+        String email = iSecurityService.getUserEmail();
         User user = iUserService.getUserDataFromEmail(email);
         iUserService.updateUser(user.getAccount() + amount, email);
     }

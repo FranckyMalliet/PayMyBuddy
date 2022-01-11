@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface CorrespondenceRepository extends JpaRepository<Correspondence, Integer>, CrudRepository<Correspondence, Integer> {
 
-    //READ
     @Query(value="FROM Correspondence c WHERE c.user.email= :email")
     List<Correspondence> findAllCorrespondenceUser(@Param("email") String email);
 

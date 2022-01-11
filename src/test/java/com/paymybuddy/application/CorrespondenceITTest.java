@@ -4,17 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.paymybuddy.application.model.Correspondence;
-import com.paymybuddy.application.service.ICorrespondenceService;
-import com.paymybuddy.application.service.IUserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,22 +26,17 @@ public class CorrespondenceITTest {
     @Autowired
     private static MockMvc mockMvc;
 
-    @Autowired
-    private ICorrespondenceService iCorrespondenceService;
-
-    @Autowired
-    private IUserService iUserService;
-
     @BeforeEach
     public void setupMockMvc(){
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-    //Mock Correspondence for testing
-    String email = "HectorDupontTest@hotmail.com";
-    String emailCorrespondence = "JeanneDupontTest@hotmail.com";
+    //Mock Correspondence
+    private final String email = "HectorDupontTest@hotmail.com";
+    private final String emailCorrespondence = "jeannepavot@hotmail.com";
 
     @Test
+    @WithMockUser(username= email, password="", roles="USER")
     public void givenACorrespondenceEmail_CreateACorrespondenceInTheDatabase() throws Exception {
         //GIVEN
         Correspondence correspondence = new Correspondence();
@@ -56,15 +50,10 @@ public class CorrespondenceITTest {
 
         //THEN
         mockMvc.perform(post("/correspondence")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest)
                         .param("email", email)
                         .param("emailCorrespondence", emailCorrespondence))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    public void givenAUserEmail_GetAllCorrespondenceOfThisUser() throws Exception {
-        mockMvc.perform(get("/correspondence")
-                .param("email", email)).
-                andExpect(status().isOk());
     }
 }

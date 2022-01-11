@@ -4,6 +4,7 @@ import com.paymybuddy.application.model.Correspondence;
 import com.paymybuddy.application.model.Transfer;
 import com.paymybuddy.application.model.User;
 import com.paymybuddy.application.service.ICorrespondenceService;
+import com.paymybuddy.application.service.ISecurityService;
 import com.paymybuddy.application.service.ITransferService;
 import com.paymybuddy.application.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,38 +31,22 @@ public class ViewController {
     @Autowired
     private ITransferService iTransferService;
 
-    //LOGIN PAGE
+    @Autowired
+    private ISecurityService iSecurityService;
 
+    //LOGIN PAGE
     @GetMapping(value="/login")
     public String login(){
-        User user = getPrincipal();
-        if(user != null){
-            return "authenticated";
-        }
         return "login";
     }
 
-    @GetMapping("/authenticated")
-    public String authenticated(Model model){
-        model.addAttribute("email", getPrincipal());
-        return "authenticated";
-    }
-
-    private User getPrincipal(){
-        User user = null;
-        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User){
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }
-        return user;
-    }
-
+    //ADD CONNECTION PAGE
     @GetMapping(value ="/connection")
     public String getNewConnectionPage(){
         return "addconnection";
     }
 
     // HOME PAGE
-
     /**
      * This URI get all correspondences from a user email,
      * the user email is given by the principal object from

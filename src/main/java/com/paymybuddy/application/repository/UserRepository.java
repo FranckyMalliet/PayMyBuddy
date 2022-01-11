@@ -13,13 +13,11 @@ import javax.transaction.Transactional;
 @Repository
 public interface UserRepository extends JpaRepository<User, String>, CrudRepository<User, String> {
 
-    //READ
     User findUserByEmail(@Param("email") String email);
 
     @Query(value="SELECT password FROM user WHERE Email = :email", nativeQuery = true)
     String findUserPassword(@Param("email") String email);
 
-    //UPDATE
     @Transactional
     @Modifying
     @Query(value ="UPDATE User user SET account =:transactionValue WHERE user.Email =:email", nativeQuery=true)

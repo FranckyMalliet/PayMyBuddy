@@ -23,7 +23,7 @@ public class CorrespondenceService implements ICorrespondenceService{
 
     //CRUD ENDPOINTS
 
-    //ADD
+    //CREATE
     public void createNewCorrespondence(String email, String emailCorrespondence){
         User user = iUserService.getUserDataFromEmail(email);
 
