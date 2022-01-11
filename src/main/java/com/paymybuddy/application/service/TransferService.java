@@ -5,13 +5,15 @@ import com.paymybuddy.application.model.Transfer;
 import com.paymybuddy.application.model.User;
 import com.paymybuddy.application.repository.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class TransferService implements ITransferService {
 
     @Autowired
@@ -26,7 +28,7 @@ public class TransferService implements ITransferService {
     @Autowired
     private ISecurityService iSecurityService;
 
-    public Transfer addNewTransfer(Transfer transfer){
+    public Transfer addNewTransfer(Transfer transfer) throws UsernameNotFoundException {
         return transferRepository.save(transfer);
     }
 

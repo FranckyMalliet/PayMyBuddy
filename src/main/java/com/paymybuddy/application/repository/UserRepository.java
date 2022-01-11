@@ -8,8 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
-
 @Repository
 public interface UserRepository extends JpaRepository<User, String>, CrudRepository<User, String> {
 
@@ -18,7 +16,6 @@ public interface UserRepository extends JpaRepository<User, String>, CrudReposit
     @Query(value="SELECT password FROM user WHERE Email = :email", nativeQuery = true)
     String findUserPassword(@Param("email") String email);
 
-    @Transactional
     @Modifying
     @Query(value ="UPDATE User user SET account =:transactionValue WHERE user.Email =:email", nativeQuery=true)
     void updateUserAccount(@Param("transactionValue") double account, @Param("email") String email);

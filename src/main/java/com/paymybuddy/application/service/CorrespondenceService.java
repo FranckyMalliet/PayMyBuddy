@@ -5,11 +5,13 @@ import com.paymybuddy.application.model.User;
 import com.paymybuddy.application.repository.CorrespondenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class CorrespondenceService implements ICorrespondenceService{
 
     @Autowired
@@ -21,9 +23,6 @@ public class CorrespondenceService implements ICorrespondenceService{
     @Autowired
     private ISecurityService iSecurityService;
 
-    //CRUD ENDPOINTS
-
-    //CREATE
     public void createNewCorrespondence(String email, String emailCorrespondence){
         User user = iUserService.getUserDataFromEmail(email);
 
