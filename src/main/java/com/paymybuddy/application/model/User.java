@@ -11,10 +11,14 @@ import java.util.List;
 @Table(name="user")
 public class User {
 
-    @Column(name="firstName", nullable = false, unique = true)
+    @Column(name="id_user")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idUser;
+
+    @Column(name="first_name", nullable = false, unique = true)
     private String firstName;
 
-    @Column(name="lastName", nullable = false, unique = true)
+    @Column(name="last_name", nullable = false, unique = true)
     private String lastName;
 
     @Id
@@ -50,6 +54,14 @@ public class User {
     public void removeCorrespondence(Correspondence correspondence){
         correspondenceList.remove(correspondence);
         correspondence.setUser(null);
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getFirstName() {

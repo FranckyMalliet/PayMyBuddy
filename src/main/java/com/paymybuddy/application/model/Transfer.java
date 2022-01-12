@@ -25,7 +25,7 @@ public class Transfer {
     @ManyToOne(
             cascade = CascadeType.ALL
     )
-    @JoinColumn(name="id_correspondence")
+    @JoinColumn(name="idCorrespondence")
     @JsonBackReference
     private Correspondence correspondence;
 

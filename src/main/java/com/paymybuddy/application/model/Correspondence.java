@@ -16,7 +16,7 @@ public class Correspondence {
     @Column(name="id_correspondence")
     private Integer idCorrespondence;
 
-    @Column(name="email_correspondence")
+    @Column(name="user_email_correspondence")
     private String emailCorrespondence;
 
     @ManyToOne(

@@ -8,16 +8,12 @@ import com.paymybuddy.application.service.ISecurityService;
 import com.paymybuddy.application.service.ITransferService;
 import com.paymybuddy.application.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ViewController {
@@ -47,28 +43,12 @@ public class ViewController {
     }
 
     // HOME PAGE
-    /**
-     * This URI get all correspondences from a user email,
-     * the user email is given by the principal object from
-     * spring security service
-     * @param model
-     * @return all correspondences from a user on the home page
-     */
-
     @GetMapping(value="/correspondences")
     public String GetAListOfCorrespondencesFromAUser(Model model){
         List<Correspondence> correspondenceList = iCorrespondenceService.getAllCorrespondenceFromUser();
         model.addAttribute("correspondences", correspondenceList);
         return "home";
     }
-
-    /**
-     * This URI get the  from a user email,
-     * the user email is given by the principal object from
-     * spring security service
-     * @param model
-     * @return all correspondences from a user on the home page
-     */
 
     @GetMapping(value="/users")
     public String getNameFromUserCorrespondence(Model model){

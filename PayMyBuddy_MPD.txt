@@ -1,5 +1,6 @@
 CREATE TABLE user (
                 email VARCHAR(100) NOT NULL,
+                id_user INT NOT NULL,
                 first_name VARCHAR(100) NOT NULL,
                 last_name VARCHAR(100) NOT NULL,
                 account DOUBLE PRECISION NOT NULL,
@@ -13,7 +14,7 @@ CREATE TABLE user (
 CREATE TABLE correspondence (
                 id_correspondence INT AUTO_INCREMENT NOT NULL,
                 email VARCHAR(100) NOT NULL,
-                email_correspondence VARCHAR(100) NOT NULL,
+                user_email_correspondence VARCHAR(100) NOT NULL,
                 PRIMARY KEY (id_correspondence)
 );
 
@@ -35,7 +36,7 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
 ALTER TABLE correspondence ADD CONSTRAINT user_correspondence_fk1
-FOREIGN KEY (email_correspondence)
+FOREIGN KEY (user_email_correspondence)
 REFERENCES user (email)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
