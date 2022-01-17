@@ -2,8 +2,6 @@
 
 ![MPD](https://github.com/FranckyMalliet/PayMyBuddy/tree/main/src/main/resources/MPD.jpg?raw=true)
 
-![Script SQL](https://github.com/FranckyMalliet/PayMyBuddy/tree/main/src/main/resources/ScriptSQL.jpg?raw=true)
-
 CREATE TABLE user (
                 id_user INT AUTO_INCREMENT NOT NULL,
                 email VARCHAR(100) NOT NULL,
@@ -15,11 +13,6 @@ CREATE TABLE user (
                 role VARCHAR(100) NOT NULL,
                 PRIMARY KEY (id_user)
 );
-
-
-CREATE UNIQUE INDEX email_unique_idx
- ON user
- ( email );
 
 CREATE TABLE correspondence (
                 id_correspondence INT AUTO_INCREMENT NOT NULL,
@@ -38,6 +31,8 @@ CREATE TABLE transfer (
                 PRIMARY KEY (id_transfer, id_user)
 );
 
+ALTER TABLE user
+ADD CONSTRAINT UC_user UNIQUE (email);
 
 ALTER TABLE correspondence ADD CONSTRAINT user_correspondence_fk
 FOREIGN KEY (id_user)
