@@ -1,3 +1,9 @@
+![UML DIAGRAM](https://github.com/FranckyMalliet/PayMyBuddy/tree/main/src/main/resources/UML_Diagram.jpg?raw=true)
+
+![MPD](https://github.com/FranckyMalliet/PayMyBuddy/tree/main/src/main/resources/MPD.jpg?raw=true)
+
+![Script SQL](https://github.com/FranckyMalliet/PayMyBuddy/tree/main/src/main/resources/ScriptSQL.jpg?raw=true)
+
 CREATE TABLE user (
                 id_user INT AUTO_INCREMENT NOT NULL,
                 email VARCHAR(100) NOT NULL,
