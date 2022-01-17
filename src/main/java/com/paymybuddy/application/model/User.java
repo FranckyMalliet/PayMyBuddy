@@ -11,6 +11,7 @@ import java.util.List;
 @Table(name="user")
 public class User {
 
+    @Id
     @Column(name="id_user")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUser;
@@ -21,7 +22,6 @@ public class User {
     @Column(name="last_name", nullable = false, unique = true)
     private String lastName;
 
-    @Id
     @Column(name="email")
     private String email;
 

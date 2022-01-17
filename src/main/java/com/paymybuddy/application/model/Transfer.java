@@ -22,6 +22,9 @@ public class Transfer {
     @Column(name="transaction_fee")
     private double transactionFee;
 
+    @Column(name="id_user")
+    private int user;
+
     @ManyToOne(
             cascade = CascadeType.ALL
     )
@@ -67,5 +70,13 @@ public class Transfer {
 
     public void setTransactionFee(double transactionFee) {
         this.transactionFee = transactionFee;
+    }
+
+    public int getUser() {
+        return user;
+    }
+
+    public void setUser(int user) {
+        this.user = user;
     }
 }

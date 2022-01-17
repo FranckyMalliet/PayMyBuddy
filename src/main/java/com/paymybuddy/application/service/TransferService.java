@@ -66,6 +66,7 @@ public class TransferService implements ITransferService {
             transfer.setAmount(amount);
             transfer.setTransactionFee(collectFee(amount));
             transfer.setCorrespondence(iCorrespondenceService.getCorrespondenceFromUser(email, emailCorrespondence));
+            transfer.setUser(userSendingMoney.getIdUser());
 
             correspondenceUserSendingMoney.addTransfer(transfer);
             addNewTransfer(transfer);

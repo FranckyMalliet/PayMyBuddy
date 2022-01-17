@@ -25,7 +25,7 @@ public class Correspondence {
                     CascadeType.MERGE
             }
     )
-    @JoinColumn(name="email")
+    @JoinColumn(name="id_user")
     @JsonBackReference
     private User user;
 
